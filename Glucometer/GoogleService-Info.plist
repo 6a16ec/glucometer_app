@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>758380611632-v6jfu0grh7uhog7d5jeq7pfs4e3rrs3m.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.758380611632-v6jfu0grh7uhog7d5jeq7pfs4e3rrs3m</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDM7eanHm1ftVJX-VNRMHbkYLUDhDVVxII</string>
+	<key>GCM_SENDER_ID</key>
+	<string>758380611632</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>nsemaev.Glucometer</string>
+	<key>PROJECT_ID</key>
+	<string>glucometer-291ab</string>
+	<key>STORAGE_BUCKET</key>
+	<string>glucometer-291ab.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:758380611632:ios:d31b12b413fc790daac5f5</string>
+</dict>
+</plist>
