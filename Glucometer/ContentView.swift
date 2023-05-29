@@ -10,11 +10,19 @@ struct ContentView: View {
             TabView {
                 HomeView()
                     .tabItem {
-                        Label("Menu", systemImage: "list.dash")
+                        Label("Home", systemImage: "folder")
                     }
-                HomeView()
+                StatisticsView()
                     .tabItem {
-                        Label("Order", systemImage: "square.and.pencil")
+                        Label("Statistics", systemImage: "chart.pie")
+                    }
+                HistoryView()
+                    .tabItem {
+                        Label("History", systemImage: "list.dash")
+                    }
+                SettingsView()
+                    .tabItem {
+                        Label("Settings", systemImage: "person.crop.circle.fill")
                     }
             }
             
