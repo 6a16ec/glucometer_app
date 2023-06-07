@@ -4,7 +4,8 @@ import Firebase
 struct ContentView: View {
     @State private var email = ""
     @State private var password = ""
-    @State private var userIsLoggedIn = false
+    @State private var userIsLoggedIn: Bool = false
+    @StateObject var glucoseData = GlucoseData()
     var body: some View {
         if userIsLoggedIn {
             TabView {
@@ -20,10 +21,12 @@ struct ContentView: View {
                     .tabItem {
                         Label("History", systemImage: "list.dash")
                     }
-                SettingsView()
+                    .environmentObject(glucoseData)
+                SettingsView(userIsLoggedIn: $userIsLoggedIn)
                     .tabItem {
                         Label("Settings", systemImage: "person.crop.circle.fill")
                     }
+                    .environmentObject(glucoseData)
             }
             
         } else {
@@ -143,5 +146,23 @@ extension View {
             placeholder().opacity(shouldShow ? 1 : 0)
             self
         }
+    }
+}
+
+
+
+class GlucoseData: ObservableObject {
+    
+    @Published var measurements = [GlucoseMeasurement]()
+    
+    init() {
+        // Code to fetch glucose measurements from API or local storage
+        // and add them to the measurements array.
+        // This depends on how you are storing and fetching the data.
+        
+        // Example code to add some sample measurements.
+        measurements.append(GlucoseMeasurement(value: 100, date: Date().addingTimeInterval(-7200)))
+        measurements.append(GlucoseMeasurement(value: 110, date: Date().addingTimeInterval(-3600)))
+        measurements.append(GlucoseMeasurement(value: 105, date: Date()))
     }
 }

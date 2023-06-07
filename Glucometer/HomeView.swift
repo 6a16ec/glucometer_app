@@ -1,84 +1,52 @@
 import SwiftUI
-import Foundation
 
+struct HealthRecommendation: Identifiable {
+    var id = UUID()
+    var image: Image
+    var title: String
+    var description: String
+}
 
 struct HomeView: View {
-    
-    @ObservedObject var glucoseData: GlucoseData
-    
-    var body: some View {
-        NavigationView {
-            VStack {
-                Text("Last Measurement: \(glucoseData.lastMeasurement?.value ?? 0) mg/dL on \(glucoseData.lastMeasurement?.dateString() ?? "")")
-                    .padding()
-                
-                Divider()
-                
-                VStack(alignment: .leading) {
-                    Text("Data for This Week")
-                        .font(.headline)
-                        .padding(.bottom)
-                    
-                    HStack {
-                        Text("Average Glucose:")
-                        Spacer()
-                        Text("\(glucoseData.averageGlucoseThisWeek) mg/dL")
-                    }
-                    
-                    HStack {
-                        Text("Maximum Glucose:")
-                        Spacer()
-                        Text("\(glucoseData.maxGlucoseThisWeek) mg/dL")
-                    }
-                    
-                    HStack {
-                        Text("Minimum Glucose:")
-                        Spacer()
-                        Text("\(glucoseData.minGlucoseThisWeek) mg/dL")
+    let recommendations = [
+            HealthRecommendation(image: Image("sleep"), title: "Get Enough Sleep", description: "Adults need between 7-9 hours of sleep per night."),
+            HealthRecommendation(image: Image("water"), title: "Stay Hydrated", description: "Drink at least 8 cups (64 ounces) of water per day."),
+            HealthRecommendation(image: Image("steps"), title: "Stay Active", description: "Try to get at least 30 minutes of exercise each day."),
+            HealthRecommendation(image: Image("vegetables"), title: "Eat Your Veggies", description: "Eat a variety of fruits and vegetables each day.")
+        ]
+
+        var body: some View {
+            NavigationView {
+                ScrollView {
+                    VStack {
+                        ForEach(recommendations) { recommendation in
+                            HStack {
+                                recommendation.image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 75, height: 75)
+                                    .padding()
+                                VStack(alignment: .leading) {
+                                    Text(recommendation.title)
+                                        .font(.headline)
+                                        .foregroundColor(.primary)
+                                        .padding(.bottom, 1)
+                                    Text(recommendation.description)
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                }
+                                Spacer()
+                            }
+                            .padding(.vertical, 8)
+                            .background(Color.secondary.opacity(0.2))
+                            .cornerRadius(10)
+                            .padding(.horizontal)
+                        }
                     }
                 }
-                .padding()
+                .navigationBarTitle("Healthy Recommendations")
             }
-            .navigationBarTitle("Glucose Settings")
         }
-    }
-}
-
-extension GlucoseMeasurement {
-    func dateString() -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMM d, h:mm a"
-        return formatter.string(from: date)
-    }
-}
-
-class GlucoseData: ObservableObject {
-    
-    @Published var measurements = [GlucoseMeasurement]()
-    
-    var lastMeasurement: GlucoseMeasurement? {
-        return measurements.last
-    }
-    
-    var averageGlucoseThisWeek: Double {
-        let weekAgo = Date().addingTimeInterval(-604800)
-        let weekMeasurements = measurements.filter { $0.date > weekAgo }
-        let total = weekMeasurements.reduce(0) { $0 + $1.value }
-        let count = Double(weekMeasurements.count)
-        return count > 0 ? total / count : 0
-    }
-    
-    var maxGlucoseThisWeek: Int {
-        let weekAgo = Date().addingTimeInterval(-604800)
-        let weekMeasurements = measurements.filter { $0.date > weekAgo }
-        return weekMeasurements.max { a, b in a.value < b.value }?.value ?? 0
-    }
-    
-    var minGlucoseThisWeek: Int {
-        let weekAgo = Date().addingTimeInterval(-604800)
-        let weekMeasurements = measurements.filter { $0.date > weekAgo }
-        return weekMeasurements.min { a, b in a.value < b.value }?.value ?? 0
-    }
 }
 
 struct HomeView_Previews: PreviewProvider {
